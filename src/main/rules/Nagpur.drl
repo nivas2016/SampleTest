@@ -1,0 +1,31 @@
+#created on: Aug 16, 2018
+package com.sample
+
+#list any import classes here.
+
+
+
+#declare any global variables here
+import com.sample.Utility;
+dialect "mvel"
+
+
+rule "Nagpur Medicine"
+
+    when
+        item:ItemCity(purchaseCity==ItemCity.City.NAGPUR,typeofitem==ItemCity.Type.MEDICINES)
+    then
+        BigDecimal tax=new BigDecimal(0.0);
+        item.setTax(tax.multiply(item.getSp()));
+		Utility.helper(drools);
+end
+
+rule "Nagpur Groceries"
+    #include attributes such as "salience" here...
+    when
+        item:ItemCity(purchaseCity==ItemCity.City.NAGPUR,typeofitem==ItemCity.Type.GROCERIES)
+    then
+        BigDecimal tax=new BigDecimal(1.0);
+        item.setTax(tax.multiply(item.getSp()));
+		Utility.helper(drools);
+end
